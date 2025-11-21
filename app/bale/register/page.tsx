@@ -151,7 +151,7 @@ export default function RegisterPage() {
               disabled={loading}
               className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
             >
-              {loading ? "در حال بررسی..." : "بررسی"}
+              {loading ? "...در حال بررسی" : "بررسی"}
             </button>
           </div>
         )}
@@ -159,7 +159,9 @@ export default function RegisterPage() {
         {/* Step 3: Show inquiry info */}
         {inquiry && (
           <div className="space-y-4 text-right">
-            <h2 className="text-lg font-semibold">اطلاعات کاربر</h2>
+            <h2 className="text-2xl block text-center  font-semibold">اطلاعات کاربر</h2>
+            <span className="text-center block font-light text-xs">اطلاعات هویتی شما به شرح ذیل می باشد</span>
+
             <p>نام: {inquiry.user.name}</p>
             <p>نام خانوادگی: {inquiry.user.family}</p>
             <p>جنسیت: {inquiry.user.gender}</p>
@@ -168,10 +170,12 @@ export default function RegisterPage() {
 
             <button
               onClick={handleRegister}
-              className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
+              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
             >
               ثبت نام 
             </button>
+                        <span className="text-center block font-light text-xs text-gray-400">با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید</span>
+
           </div>
         )}
       </div>
