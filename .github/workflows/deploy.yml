@@ -22,9 +22,9 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/balefinal
-            git pull
-            npm install
-            npx prisma migrate deploy
-            npx prisma generate
-            npm run build
-            pm2 restart pwa
+            sudo git pull
+            sudo npm install
+            sudo npx prisma migrate deploy
+            sudo npx prisma generate
+            sudo npm run build
+            sudo pm2 restart pwa
