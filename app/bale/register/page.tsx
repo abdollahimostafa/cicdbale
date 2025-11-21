@@ -20,7 +20,10 @@ interface InquiryResponse {
     };
   };
 }
-
+const getBirthYear = (birthDate?: string) => {
+  if (!birthDate) return "نامشخص";
+  return birthDate.slice(0, 4); // first 4 characters
+};
 export default function RegisterPage() {
   const { user, ready, requestPhoneNumber } = useBale();
 
@@ -165,7 +168,7 @@ export default function RegisterPage() {
             <p>نام: {inquiry.user.name}</p>
             <p>نام خانوادگی: {inquiry.user.family}</p>
             <p>جنسیت: {inquiry.user.gender}</p>
-            <p>تاریخ تولد: {inquiry.user.birth_date}</p>
+<p>تاریخ تولد: {getBirthYear(inquiry.user.birth_date)}</p>
             <p>بیمه: {inquiry.insurance.title}</p>
 
             <button
@@ -174,7 +177,7 @@ export default function RegisterPage() {
             >
               ثبت نام 
             </button>
-                        <span className="text-center block font-light text-xs text-gray-400">با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید</span>
+                        <span className="text-center block font-light text-xs text-gray-500">با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید</span>
 
           </div>
         )}
