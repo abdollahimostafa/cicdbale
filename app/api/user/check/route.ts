@@ -1,12 +1,27 @@
-import { Prisma } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { userId } = await req.json();
+  try {
+    const { userId } = await req.json();
 
-  const user = await Prisma.user.findUnique({
-    where: { baleId: userId }
-  });
+    if (!userId) {
+      return NextResponse.json(
+        { exists: false, error: "Missing userId" },
+        { status: 400 }
+      );
+    }
 
-  return NextResponse.json({ exists: !!user });
+    const user = await prisma.user.findUnique({
+      where: { baleId: userId },
+    });
+
+    return NextResponse.json({ exists: !!user, user: user ?? null });
+  } catch (err) {
+    console.error("API /user/check error:", err);
+    return NextResponse.json(
+      { exists: false, error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
