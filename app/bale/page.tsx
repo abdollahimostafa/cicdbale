@@ -10,27 +10,27 @@ export default function BaleMain() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (!ready) return;
+  useEffect(() => {
+    if (!ready) return;
 
-  //   if (!user) {
-  //     // Not coming from Bale? redirect to error
-  //     router.replace("/");
-  //     return;
-  //   }
+    if (!user) {
+      // Not coming from Bale? redirect to error
+      router.replace("/");
+      return;
+    }
 
-  //   // Call API to check if user exists in DB
-  //   fetch(`/api/user/check?userId=${user.id}`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (data.exists) {
-  //         setLoading(false);
-  //       } else {
-  //         // User not registered → redirect to grant access page
-  //         router.replace("/bale/grant-access");
-  //       }
-  //     })
-  // }, [ready, user, router]);
+    // Call API to check if user exists in DB
+    fetch(`/api/user/check?userId=${user.id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.exists) {
+          setLoading(false);
+        } else {
+          // User not registered → redirect to grant access page
+          router.replace("/bale/grant-access");
+        }
+      })
+  }, [ready, user, router]);
 
   if (loading) return <div><LoadingFlip/></div>;
 
