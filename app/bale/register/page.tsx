@@ -2,6 +2,24 @@
 
 import { useEffect, useState } from "react";
 import { useBale } from "@/hooks/useBale";
+interface InquiryResponse {
+  status: boolean;
+  message: string;
+  data: {
+    user: {
+      national_number: string;
+      name: string;
+      family: string;
+      birth_date: string;
+      gender: string;
+    };
+    insurance: {
+      title: string;
+      sepas_system_code: string;
+      type: string;
+    };
+  };
+}
 
 export default function RegisterPage() {
   const { user, ready, requestPhoneNumber } = useBale();
@@ -10,7 +28,8 @@ export default function RegisterPage() {
   const [permissionError, setPermissionError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
   const [nationalId, setNationalId] = useState("");
-
+  const [inquiry, setInquiry] = useState<InquiryResponse["data"] | null>(null);
+  const [loading, setLoading] = useState(false);
   // Request phone number on page load
   useEffect(() => {
     if (!ready) return;
@@ -39,9 +58,37 @@ export default function RegisterPage() {
 
   const handleNextStep = () => setStep(2);
 
-  const handleCheck = () => {
-    console.log("National ID:", nationalId);
-    // TODO: send national ID to backend along with Bale user info
+  const handleCheck = async () => {
+    if (!nationalId) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("https://www.medimedia.ir/api/v1/insurance/inquire", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ national_code: nationalId }),
+      });
+
+      const data: InquiryResponse = await res.json();
+
+      if (data.status && data.data) {
+        setInquiry(data.data);
+      } else {
+        alert(data.message || "خطا در دریافت اطلاعات.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("خطا در اتصال به سرور.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+    const handleRegister = () => {
+    console.log("Registering user:", { phoneNumber, nationalId, inquiry });
+    // TODO: send all info to your backend to create the user
   };
 
   return (
@@ -86,7 +133,8 @@ export default function RegisterPage() {
         )}
 
         {/* Step 2: National ID */}
-        {step === 2 && (
+{/* Step 2: National ID */}
+        {step === 2 && !inquiry && (
           <div className="space-y-4">
             <label className="block font-medium text-gray-700">کد ملی:</label>
             <input
@@ -99,9 +147,29 @@ export default function RegisterPage() {
 
             <button
               onClick={handleCheck}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
             >
-              بررسی
+              {loading ? "در حال بررسی..." : "بررسی"}
+            </button>
+          </div>
+        )}
+
+        {/* Step 3: Show inquiry info */}
+        {inquiry && (
+          <div className="space-y-4 text-right">
+            <h2 className="text-lg font-semibold">اطلاعات کاربر</h2>
+            <p>نام: {inquiry.user.name}</p>
+            <p>نام خانوادگی: {inquiry.user.family}</p>
+            <p>جنسیت: {inquiry.user.gender}</p>
+            <p>تاریخ تولد: {inquiry.user.birth_date}</p>
+            <p>بیمه: {inquiry.insurance.title}</p>
+
+            <button
+              onClick={handleRegister}
+              className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
+            >
+              ثبت نام من
             </button>
           </div>
         )}
