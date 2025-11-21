@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import localFont from "next/font/local";
 
 // ----- Local font setup -----
 const yekanBakh = localFont({
   src: [
     {
-      path: "../public/fonts/YekanBakhFaNum-Regular.woff2",
+      path: "../../public/fonts/YekanBakhFaNum-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../public/fonts/YekanBakhFaNum-Bold.woff2",
+      path: "../../public/fonts/YekanBakhFaNum-Bold.woff2",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../public/fonts/YekanBakhFaNum-Thin.woff2",
+      path: "../../public/fonts/YekanBakhFaNum-Thin.woff2",
       weight: "100",
       style: "normal",
     },
