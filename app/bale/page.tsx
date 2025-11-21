@@ -13,9 +13,27 @@ export default function BaleMain() {
     if (!ready) return;
 
     if (!user) {
+      // Not coming from Bale? redirect to error
       router.replace("/");
       return;
+    }
+
+    // Call API to check if user exists in DB
+    fetch(`/api/users/check?userId=${user.id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.exists) {
+          // User exists → proceed
+          setLoading(false);
+        } else {
+          // User not registered → redirect to grant access page
+          router.replace("/bale/grant-access");
         }
+      })
+      .catch(err => {
+        console.error(err);
+        router.replace("/");
+      });
   }, [ready, user, router]);
 
   if (loading) return <div>Loading...</div>;
