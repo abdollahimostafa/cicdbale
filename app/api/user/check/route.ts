@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
   try {
-    const { userId } = await req.json();
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId");
 
     if (!userId) {
       return NextResponse.json(
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ exists: !!user, user: user ?? null });
   } catch (err) {
-    console.error("API /user/check error:", err);
+    console.error("API /user/check GET error:", err);
     return NextResponse.json(
       { exists: false, error: "Internal server error" },
       { status: 500 }
