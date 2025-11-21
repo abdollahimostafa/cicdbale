@@ -31,6 +31,8 @@ body {
 .custom-swiper .swiper-pagination-bullet {
   background: #9ca3af; /* gray-400 */
   opacity: 1;
+  width: 11px !important;
+  height: 11px !important;
 }
 
 .custom-swiper .swiper-pagination-bullet-active {
