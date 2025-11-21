@@ -19,7 +19,7 @@ export default function BaleMain() {
     }
 
     // Call API to check if user exists in DB
-    fetch(`/api/users/check?userId=${user.id}`)
+    fetch(`/api/user/check?userId=${user.id}`)
       .then(res => res.json())
       .then(data => {
         if (data.exists) {
