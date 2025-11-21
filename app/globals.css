@@ -23,3 +23,16 @@
 body {
   font-family: var(--font-yekan), sans-serif;
 }
+
+.custom-swiper .swiper-pagination {
+  bottom: 100px !important; /* move up */
+}
+
+.custom-swiper .swiper-pagination-bullet {
+  background: #9ca3af; /* gray-400 */
+  opacity: 1;
+}
+
+.custom-swiper .swiper-pagination-bullet-active {
+  background: #155dfc; /* gray-800 */
+}

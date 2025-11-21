@@ -27,7 +27,7 @@ export default function BaleMain() {
           setLoading(false);
         } else {
           // User not registered → redirect to grant access page
-          router.replace("/bale/grant-access");
+          router.replace("/bale/grantaccesss");
         }
       })
   }, [ready, user, router]);
