@@ -36,6 +36,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+          <head>
+        {/* Inject Bale MiniApp JS */}
+        <script src="https://tapi.bale.ai/miniapp.js?3"></script>
+      </head>
       <body className={`${yekanBakh.variable} antialiased`}>
         {children}
       </body>
