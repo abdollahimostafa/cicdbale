@@ -20,7 +20,7 @@ export default function GrantAccess() {
   const isLast = activeIndex === slidesCount - 1;
 
   return (
-    <div className="w-full min-h-screen bg-black flex items-center justify-center">
+    <div className="w-full min-h-screen bg-white flex items-center justify-center">
       {/* White App Container */}
       <div className="bg-white w-full max-w-md min-h-screen md:min-h-[650px] overflow-hidden md:shadow-xl flex flex-col justify-center relative">
 
