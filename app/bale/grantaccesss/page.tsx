@@ -120,7 +120,7 @@ export default function GrantAccess() {
               </motion.div>
 
               <Link
-                href="/register"
+                href="/bale/register"
                 className="bg-blue-600 text-white w-full py-3 rounded-xl text-center text-base font-medium hover:bg-blue-700 transition"
               >
                 ورود به سامانه
