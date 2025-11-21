@@ -111,7 +111,7 @@ export default function RegisterPage() {
 
             {permissionError && (
               <div className="space-y-2">
-                <p className="text-red-500 text-sm">{permissionError}</p>
+                <p className="text-red-500 block text-center text-sm">{permissionError}</p>
                 <button
                   onClick={handleRetry}
                   className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
@@ -135,14 +135,15 @@ export default function RegisterPage() {
         {/* Step 2: National ID */}
 {/* Step 2: National ID */}
         {step === 2 && !inquiry && (
-          <div className="space-y-4">
-            <label className="block font-medium text-gray-700">کد ملی:</label>
+          <div className="space-y-4 -mt-10">
+            <label className="block text-center text-2xl font-bold text-gray-700">کد ملی شما</label>
+            <span className="text-center block font-light text-xs">کدملی شما برای ثبت نسخ و همچنین احراز هویت بیمه استفاده خواهد شد</span>
             <input
               type="text"
               value={nationalId}
               onChange={(e) => setNationalId(e.target.value)}
               placeholder="کد ملی خود را وارد کنید"
-              className="w-full p-3 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              className="w-full pp-3 py-2 text-center border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
             />
 
             <button
@@ -169,7 +170,7 @@ export default function RegisterPage() {
               onClick={handleRegister}
               className="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
             >
-              ثبت نام من
+              ثبت نام 
             </button>
           </div>
         )}
