@@ -12,18 +12,18 @@ export default function RegisterPage() {
   const [nationalId, setNationalId] = useState("");
 
   // Request phone number on page load
-//   useEffect(() => {
-//     if (!ready) return;
+  useEffect(() => {
+    if (!ready) return;
 
-//     window.Bale?.WebApp.requestContact((granted, phone) => {
-//       if (granted && phone) {
-//         setPhoneNumber(phone);
-//         setPermissionError(null);
-//       } else {
-//         setPermissionError("برای ادامه لطفاً دسترسی به شماره تلفن خود را بدهید.");
-//       }
-//     });
-//   }, [ready]);
+    window.Bale?.WebApp.requestContact((granted, phone) => {
+      if (granted && phone) {
+        setPhoneNumber(phone);
+        setPermissionError(null);
+      } else {
+        setPermissionError("برای ادامه لطفاً دسترسی به شماره تلفن خود را بدهید.");
+      }
+    });
+  }, [ready]);
 
   const handleRetry = () => {
     requestPhoneNumber();
@@ -58,7 +58,7 @@ export default function RegisterPage() {
               value={phoneNumber ?? ""}
               readOnly
               placeholder="شماره تلفن دریافت نشد"
-              disabled="true"
+              disabled
               className="w-full p-3 py-2 border-gray-300 border  text-center rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none"
             />
 
