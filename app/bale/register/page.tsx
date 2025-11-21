@@ -92,6 +92,8 @@ export default function RegisterPage() {
 const handleRegister = async () => {
   if (!phoneNumber || !nationalId || !inquiry) return;
 
+  setLoading(true);
+
   try {
     const res = await fetch("/api/user/create", {
       method: "POST",
@@ -108,14 +110,20 @@ const handleRegister = async () => {
 
     if (data.ok) {
       console.log("User registered:", data.user);
-      // You can navigate to the main app page here
+      // Redirect to main page
+      window.location.href = "/gg"; // simple redirect
     } else {
       console.error("Registration failed:", data.error);
+      alert("ثبت نام انجام نشد، لطفاً دوباره تلاش کنید.");
     }
   } catch (err) {
     console.error("Network error:", err);
+    alert("خطا در ارتباط با سرور، دوباره تلاش کنید.");
+  } finally {
+    setLoading(false);
   }
 };
+
 
 
   return (
@@ -195,12 +203,14 @@ const handleRegister = async () => {
 <p>سال تولد: {getBirthYear(inquiry.user.birth_date)}</p>
             <p>بیمه: {inquiry.insurance.title}</p>
 
-            <button
-              onClick={handleRegister}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-green-700 transition"
-            >
-              ثبت نام 
-            </button>
+<button
+  onClick={handleRegister}
+  disabled={loading}
+  className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-green-700 transition disabled:opacity-50"
+>
+  {loading ? "در حال ثبت‌نام..." : "ثبت نام"}
+</button>
+
                         <span className="text-center block font-light text-xs text-gray-500">با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید</span>
 
           </div>
