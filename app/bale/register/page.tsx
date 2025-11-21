@@ -89,10 +89,34 @@ export default function RegisterPage() {
     }
   };
 
-    const handleRegister = () => {
-    console.log("Registering user:", { phoneNumber, nationalId, inquiry });
-    // TODO: send all info to your backend to create the user
-  };
+const handleRegister = async () => {
+  if (!phoneNumber || !nationalId || !inquiry) return;
+
+  try {
+    const res = await fetch("/api/user/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        baleId: user?.id,
+        phone: phoneNumber,
+        nationalId,
+        inquiry,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      console.log("User registered:", data.user);
+      // You can navigate to the main app page here
+    } else {
+      console.error("Registration failed:", data.error);
+    }
+  } catch (err) {
+    console.error("Network error:", err);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center  px-4">
@@ -168,7 +192,7 @@ export default function RegisterPage() {
             <p>نام: {inquiry.user.name}</p>
             <p>نام خانوادگی: {inquiry.user.family}</p>
             <p>جنسیت: {inquiry.user.gender}</p>
-<p>تاریخ تولد: {getBirthYear(inquiry.user.birth_date)}</p>
+<p>سال تولد: {getBirthYear(inquiry.user.birth_date)}</p>
             <p>بیمه: {inquiry.insurance.title}</p>
 
             <button
