@@ -11,5 +11,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/bale/:path*"], // only middleware runs for /app and its subpaths
+  matcher: ["/:path*"], // only middleware runs for /app and its subpaths
 };
