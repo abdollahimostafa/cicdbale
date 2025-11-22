@@ -27,6 +27,6 @@ if (!baleId || !phone || !nationalId || !inquiry) {
 // });    return NextResponse.json({ ok: true, user });
   } catch (error) {
     console.error("Register user error:", error);
-    return NextResponse.json({ ok: false, error: baleId}, { status: 500 });
+    return NextResponse.json({ ok: false, error:"internal error"}, { status: 500 });
   }
 }
