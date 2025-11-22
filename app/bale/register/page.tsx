@@ -93,8 +93,12 @@ const [registerSuccess, setRegisterSuccess] = useState<boolean>(false);
     }
   };
 const handleRegister = async () => {
-  if (!phoneNumber || !nationalId || !inquiry || !user?.id) {
-    setRegisterError("اطلاعات کاربری ناقص است.");
+  if (!user?.id) {
+    setRegisterError("شناسه بله دریافت نشده است.");
+    return;
+  }
+  if (!phoneNumber || !nationalId || !inquiry) {
+    setRegisterError("اطلاعات ناقص است.");
     return;
   }
 
@@ -106,10 +110,14 @@ const handleRegister = async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        baleId: String(user.id),
+        baleId: String(user.id),          // MUST be string
         phone: String(phoneNumber),
         nationalId: String(nationalId),
-        inquiry,
+        firstName: inquiry.user.name ?? "",
+        lastName: inquiry.user.family ?? "",
+        gender: inquiry.user.gender ?? "",
+        birthYear: inquiry.user.birth_date?.slice(0, 4) ?? "",
+        insurance: inquiry.insurance?.title ?? "",
       }),
     });
 
@@ -121,14 +129,16 @@ const handleRegister = async () => {
         window.location.href = "/gg";
       }, 1500);
     } else {
-      setRegisterError(data.error || "ثبت نام انجام نشد، لطفاً دوباره تلاش کنید.");
+      setRegisterError(data.error || "ثبت نام انجام نشد، دوباره تلاش کنید.");
     }
   } catch (err) {
-    setRegisterError("خطا در ارتباط با سرور، دوباره تلاش کنید.");
+    console.error(err);
+    setRegisterError("خطا در ارتباط با سرور.");
   } finally {
     setLoading(false);
   }
 };
+
 
 
 
