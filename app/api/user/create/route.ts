@@ -16,7 +16,7 @@ const user = await prisma.user.create({
     firstName: inquiry.user.name,
     lastName: inquiry.user.family,
     gender: inquiry.user.gender,
-    birthYear: Number(inquiry.user.birth_date?.slice(0, 4)),
+    birthYear: inquiry.user.birth_date?.slice(0, 4),
     nationalId,
     insurance: inquiry.insurance?.title ?? "",
   },
