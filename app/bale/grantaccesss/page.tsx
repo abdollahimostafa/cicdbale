@@ -91,14 +91,11 @@ export default function GrantAccess() {
             <div className="relative px-6 flex flex-col items-center justify-center text-center gap-5 min-h-screen py-16">
               <div className="absolute inset-0 bg-white/30 backdrop-blur-md" />
               <div className="relative z-10 max-w-md px-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7 }}
+                <div
                   className="text-2xl font-bold text-gray-800"
                 >
                   سامانه خدمات درمانی
-                </motion.div>
+                </div>
                 <p className="text-gray-700 leading-7 text-sm mt-4">
                   با استفاده از این سامانه شما می‌توانید به صورت هوشمند
                   خدمات پزشکی، مدیریت پرونده، ثبت درخواست‌ها و پیگیری وضعیت درمان
