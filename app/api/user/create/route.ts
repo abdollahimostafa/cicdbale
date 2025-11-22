@@ -11,16 +11,18 @@ if (!baleId || !phone || !nationalId || !inquiry) {
 
 const user = await prisma.user.create({
   data: {
-    baleId,
-    phone: phone,
-    firstName: inquiry.user.name,
-    lastName: inquiry.user.family,
-    gender: inquiry.user.gender,
-    birthYear: inquiry.user.birth_date?.slice(0, 4),
-    nationalId,
-    insurance: inquiry.insurance?.title ?? "",
+    baleId: String(baleId),
+    phone: String(phone),
+    firstName: String(inquiry.user.name ?? ""),
+    lastName: String(inquiry.user.family ?? ""),
+    gender: String(inquiry.user.gender ?? ""),
+    birthYear: String(inquiry.user.birth_date?.slice(0, 4) ?? ""),
+    nationalId: String(nationalId),
+    insurance: String(inquiry.insurance?.title ?? ""),
   },
-});    return NextResponse.json({ ok: true, user });
+});
+
+return NextResponse.json({ ok: true, user });
   } catch (error) {
     console.error("Register user error:", error);
     return NextResponse.json({ ok: false, error: "Internal Server Error" }, { status: 500 });
