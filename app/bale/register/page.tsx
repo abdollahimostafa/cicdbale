@@ -206,6 +206,7 @@ const handleRegister = async () => {
     <p>جنسیت: {inquiry.user.gender}</p>
     <p>سال تولد: {getBirthYear(inquiry.user.birth_date)}</p>
     <p>بیمه: {inquiry.insurance.title}</p>
+    <p>شناسه کاربر بله: {user?.id}</p>
 
     {registerError && (
       <p className="text-red-500 text-center">{registerError}</p>
