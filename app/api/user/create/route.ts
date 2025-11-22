@@ -9,8 +9,6 @@ if (!baleId || !phone || !nationalId || !inquiry) {
   return NextResponse.json({ ok: false, error: "Missing parameters" }, { status: 400 });
 }
 
-
-
 const user = await prisma.user.create({
   data: {
     baleId,
@@ -25,6 +23,6 @@ const user = await prisma.user.create({
 });    return NextResponse.json({ ok: true, user });
   } catch (error) {
     console.error("Register user error:", error);
-    return NextResponse.json({ ok: false, error: baleId}, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Internal Server Error" }, { status: 500 });
   }
 }
