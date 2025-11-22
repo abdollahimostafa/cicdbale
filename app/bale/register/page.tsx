@@ -33,6 +33,10 @@ export default function RegisterPage() {
   const [nationalId, setNationalId] = useState("");
   const [inquiry, setInquiry] = useState<InquiryResponse["data"] | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const [registerError, setRegisterError] = useState<string | null>(null);
+const [registerSuccess, setRegisterSuccess] = useState<boolean>(false);
+
   // Request phone number on page load
   useEffect(() => {
     if (!ready) return;
@@ -93,6 +97,7 @@ const handleRegister = async () => {
   if (!phoneNumber || !nationalId || !inquiry) return;
 
   setLoading(true);
+  setRegisterError(null);
 
   try {
     const res = await fetch("/api/user/create", {
@@ -109,16 +114,16 @@ const handleRegister = async () => {
     const data = await res.json();
 
     if (data.ok) {
-      console.log("User registered:", data.user);
-      // Redirect to main page
-      window.location.href = "/gg"; // simple redirect
+      setRegisterSuccess(true);
+      // You can optionally redirect after a short delay
+      setTimeout(() => {
+        window.location.href = "/gg";
+      }, 1500);
     } else {
-      console.error("Registration failed:", data.error);
-      alert("ثبت نام انجام نشد، لطفاً دوباره تلاش کنید.");
+      setRegisterError(data.error || "ثبت نام انجام نشد، لطفاً دوباره تلاش کنید.");
     }
   } catch (err) {
-    console.error("Network error:", err);
-    alert("خطا در ارتباط با سرور، دوباره تلاش کنید.");
+    setRegisterError("خطا در ارتباط با سرور، دوباره تلاش کنید.");
   } finally {
     setLoading(false);
   }
@@ -191,30 +196,39 @@ const handleRegister = async () => {
           </div>
         )}
 
-        {/* Step 3: Show inquiry info */}
-        {inquiry && (
-          <div className="space-y-4 text-right">
-            <h2 className="text-2xl block text-center  font-semibold">اطلاعات کاربر</h2>
-            <span className="text-center block font-light text-xs">اطلاعات هویتی شما به شرح ذیل می باشد</span>
+  {/* Step 3: Show inquiry info */}
+{inquiry && (
+  <div className="space-y-4 text-right">
+    <h2 className="text-2xl block text-center font-semibold">اطلاعات کاربر</h2>
 
-            <p>نام: {inquiry.user.name}</p>
-            <p>نام خانوادگی: {inquiry.user.family}</p>
-            <p>جنسیت: {inquiry.user.gender}</p>
-<p>سال تولد: {getBirthYear(inquiry.user.birth_date)}</p>
-            <p>بیمه: {inquiry.insurance.title}</p>
+    <p>نام: {inquiry.user.name}</p>
+    <p>نام خانوادگی: {inquiry.user.family}</p>
+    <p>جنسیت: {inquiry.user.gender}</p>
+    <p>سال تولد: {getBirthYear(inquiry.user.birth_date)}</p>
+    <p>بیمه: {inquiry.insurance.title}</p>
 
-<button
-  onClick={handleRegister}
-  disabled={loading}
-  className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-green-700 transition disabled:opacity-50"
->
-  {loading ? "در حال ثبت‌نام..." : "ثبت نام"}
-</button>
+    {registerError && (
+      <p className="text-red-500 text-center">{registerError}</p>
+    )}
 
-                        <span className="text-center block font-light text-xs text-gray-500">با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید</span>
+    {registerSuccess && (
+      <p className="text-green-600 text-center">ثبت نام با موفقیت انجام شد!</p>
+    )}
 
-          </div>
-        )}
+    <button
+      onClick={handleRegister}
+      disabled={loading || registerSuccess}
+      className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-green-700 transition disabled:opacity-50"
+    >
+      {loading ? "در حال ثبت‌نام..." : "ثبت نام"}
+    </button>
+
+    <span className="text-center block font-light text-xs text-gray-500">
+      با ثبت نام در مدی مدیا شما با قوانین و ضوابط سامانه موافق هستید
+    </span>
+  </div>
+)}
+
       </div>
     </div>
   );
