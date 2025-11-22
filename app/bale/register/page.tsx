@@ -92,9 +92,11 @@ const [registerSuccess, setRegisterSuccess] = useState<boolean>(false);
       setLoading(false);
     }
   };
-
 const handleRegister = async () => {
-  if (!phoneNumber || !nationalId || !inquiry) return;
+  if (!phoneNumber || !nationalId || !inquiry || !user?.id) {
+    setRegisterError("اطلاعات کاربری ناقص است.");
+    return;
+  }
 
   setLoading(true);
   setRegisterError(null);
@@ -104,9 +106,9 @@ const handleRegister = async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        baleId: user?.id,
-        phone: phoneNumber,
-        nationalId,
+        baleId: String(user.id),
+        phone: String(phoneNumber),
+        nationalId: String(nationalId),
         inquiry,
       }),
     });
@@ -115,7 +117,6 @@ const handleRegister = async () => {
 
     if (data.ok) {
       setRegisterSuccess(true);
-      // You can optionally redirect after a short delay
       setTimeout(() => {
         window.location.href = "/gg";
       }, 1500);
