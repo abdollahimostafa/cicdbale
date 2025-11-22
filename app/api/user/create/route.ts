@@ -3,16 +3,16 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-const { baleId, phoneNumber, nationalId, inquiry } = await req.json();
+const { baleId, phone, nationalId, inquiry } = await req.json();
 
-if (!baleId || !phoneNumber || !nationalId || !inquiry) {
+if (!baleId || !phone || !nationalId || !inquiry) {
   return NextResponse.json({ ok: false, error: "Missing parameters" }, { status: 400 });
 }
 
 const user = await prisma.user.create({
   data: {
     baleId,
-    phone: phoneNumber,
+    phone: phone,
     firstName: inquiry.user.name,
     lastName: inquiry.user.family,
     gender: inquiry.user.gender,
